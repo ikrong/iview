@@ -56,9 +56,10 @@ import Tooltip from './components/tooltip';
 import Transfer from './components/transfer';
 import Tree from './components/tree';
 import Upload from './components/upload';
-import {Row, Col} from './components/grid';
-import {Select, Option, OptionGroup} from './components/select';
+import { Row, Col } from './components/grid';
+import { Select, Option, OptionGroup } from './components/select';
 import locale from './locale/index';
+import AsyncValidator from 'async-validator';
 
 const components = {
     Affix,
@@ -161,10 +162,15 @@ const iview = {
     iTime: Time
 };
 
-const install = function(Vue, opts = {}) {
+const install = function (Vue, opts = {}) {
     if (install.installed) return;
     locale.use(opts.locale);
     locale.i18n(opts.i18n);
+
+    let validators = opts.validators || {};
+    Object.keys().map(key => {
+        AsyncValidator.register(key, validators[key]);
+    })
 
     Object.keys(iview).forEach(key => {
         Vue.component(key, iview[key]);
