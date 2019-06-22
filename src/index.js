@@ -168,7 +168,7 @@ const install = function (Vue, opts = {}) {
     locale.i18n(opts.i18n);
 
     let validators = opts.validators || {};
-    Object.keys().map(key => {
+    Object.keys(validators).map(key => {
         AsyncValidator.register(key, validators[key]);
     })
 
